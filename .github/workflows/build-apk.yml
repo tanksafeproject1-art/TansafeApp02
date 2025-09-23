@@ -19,10 +19,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Detect Flutter version
+        id: flutter_version
+        run: |
+          if [ -f .flutter-version ]; then
+            VERSION=$(cat .flutter-version)
+          elif grep -q "flutter" pubspec.yaml; then
+            VERSION=$(grep flutter pubspec.yaml | head -1 | awk '{print $2}' | tr -d '"')
+          else
+            VERSION=stable
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: ${{ steps.flutter_version.outputs.version }}
 
       - name: Install dependencies
         run: flutter pub get
