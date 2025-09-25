@@ -1,0 +1,13 @@
+# Flutter/Dart
+.dart_tool/
+.build/
+pubspec.lock
+
+# IDE files
+.vscode/
+.idea/
+
+# Firebase/Secrets
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+*.secret.json
